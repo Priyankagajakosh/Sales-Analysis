@@ -47,4 +47,5 @@ How many orders are pending?
 
 Author
 
-Your NameSQL | Data Analysis | Business Intelligence
+Priyanka Gajakosh
+SQL | Data Analysis | Business Intelligence
