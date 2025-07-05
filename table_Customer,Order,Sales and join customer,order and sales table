@@ -84,3 +84,25 @@ VALUES
 (8, 8, 8, '2023-01-22', 450.00, 'Credit Card', 'Paid'),
 (9, 9, 9, '2023-01-23', 60.50, 'PayPal', 'Paid'),
 (10, 10, 10, '2023-01-24', 120.00, 'Credit Card', 'Pending');
+
+
+
+ Example: Join Customers + Orders + Sales
+
+SELECT
+    c.CustomerID,
+    CONCAT(c.FirstName, ' ', c.LastName) AS FullName,
+    o.OrderID,
+    o.OrderDate,
+    o.TotalAmount AS OrderTotal,
+    o.Status AS OrderStatus,
+    s.SaleID,
+    s.SaleDate,
+    s.Amount AS SaleAmount,
+    s.PaymentMethod,
+    s.Status AS PaymentStatus
+FROM
+    Customers c
+    JOIN Orders o ON c.CustomerID = o.CustomerID
+    LEFT JOIN Sales s ON o.OrderID = s.OrderID;
+
