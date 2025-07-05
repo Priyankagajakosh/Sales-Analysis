@@ -1,0 +1,86 @@
+CREATE TABLE Customer (
+    CustomerID SERIAL PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Email VARCHAR(100),
+    Phone VARCHAR(20),
+    Address VARCHAR(255),
+    City VARCHAR(50),
+    State VARCHAR(50),
+    ZipCode VARCHAR(10),
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO Customer (CustomerID, FirstName, LastName, Email, Phone, Address, City, State, ZipCode)
+VALUES
+(1, 'John', 'Doe', 'john.doe@gmail.com', '123-456-7890', '123 Main St', 'New York', 'NY', '10001'),
+(2, 'Jane', 'Smith', 'jane.smith@gmail.com', '555-123-4567', '456 Elm St', 'Los Angeles', 'CA', '90001'),
+(3, 'Alice', 'Johnson', 'alice.johnson@gmail.com', '987-654-3210', '789 Oak Ave', 'Chicago', 'IL', '60601'),
+(4, 'Bob', 'Williams', 'bob.williams@gmail.com', '222-333-4444', '321 Pine St', 'Houston', 'TX', '77001'),
+(5, 'Emma', 'Brown', 'emma.brown@gmail.com', '111-222-3333', '654 Maple Rd', 'Phoenix', 'AZ', '85001'),
+(6, 'Michael', 'Davis', 'michael.davis@gmail.com', '444-555-6666', '987 Cedar Dr', 'Philadelphia', 'PA', '19101'),
+(7, 'Olivia', 'Miller', 'olivia.miller@gmail.com', '777-888-9999', '246 Birch Ln', 'San Antonio', 'TX', '78201'),
+(8, 'Liam', 'Wilson', 'liam.wilson@gmail.com', '333-444-5555', '135 Spruce Ct', 'San Diego', 'CA', '92101'),
+(9, 'Sophia', 'Moore', 'sophia.moore@gmail.com', '666-777-8888', '864 Walnut St', 'Dallas', 'TX', '75201'),
+(10, 'Noah', 'Taylor', 'noah.taylor@gmail.com', '999-000-1111', '753 Chestnut Blvd', 'San Jose', 'CA', '95101');
+
+select * from Customer;
+
+
+
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    CustomerID INT,
+    OrderDate DATE,
+    TotalAmount DECIMAL(10, 2),
+    Status VARCHAR(20),
+    ShippingAddress VARCHAR(255),
+    City VARCHAR(50),
+    State VARCHAR(50),
+    ZipCode VARCHAR(10),
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+select * from Orders;
+
+INSERT INTO Orders (OrderID, CustomerID, OrderDate, TotalAmount, Status, ShippingAddress, City, State, ZipCode)
+VALUES
+(1, 1, '2023-01-15', 150.75, 'Delivered', '123 Main St', 'New York', 'NY', '10001'),
+(2, 2, '2023-01-16', 200.50, 'Shipped', '456 Elm St', 'Los Angeles', 'CA', '90001'),
+(3, 3, '2023-01-17', 75.00, 'Pending', '789 Oak Ave', 'Chicago', 'IL', '60601'),
+(4, 4, '2023-01-18', 320.20, 'Delivered', '321 Pine St', 'Houston', 'TX', '77001'),
+(5, 5, '2023-01-19', 180.99, 'Cancelled', '654 Maple Rd', 'Phoenix', 'AZ', '85001'),
+(6, 6, '2023-01-20', 250.00, 'Delivered', '987 Cedar Dr', 'Philadelphia', 'PA', '19101'),
+(7, 7, '2023-01-21', 90.75, 'Pending', '246 Birch Ln', 'San Antonio', 'TX', '78201'),
+(8, 8, '2023-01-22', 450.00, 'Shipped', '135 Spruce Ct', 'San Diego', 'CA', '92101'),
+(9, 9, '2023-01-23', 60.50, 'Delivered', '864 Walnut St', 'Dallas', 'TX', '75201'),
+(10, 10, '2023-01-24', 120.00, 'Pending', '753 Chestnut Blvd', 'San Jose', 'CA', '95101');
+
+
+
+CREATE TABLE Sales (
+    SaleID INT PRIMARY KEY,
+    OrderID INT,
+    CustomerID INT,
+    SaleDate DATE,
+    Amount DECIMAL(10, 2),
+    PaymentMethod VARCHAR(50),
+    Status VARCHAR(20),
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+select * from Sales;
+
+INSERT INTO Sales (SaleID, OrderID, CustomerID, SaleDate, Amount, PaymentMethod, Status)
+VALUES
+(1, 1, 1, '2023-01-15', 150.75, 'Credit Card', 'Paid'),
+(2, 2, 2, '2023-01-16', 200.50, 'PayPal', 'Paid'),
+(3, 3, 3, '2023-01-17', 75.00, 'Debit Card', 'Pending'),
+(4, 4, 4, '2023-01-18', 320.20, 'Credit Card', 'Paid'),
+(5, 5, 5, '2023-01-19', 0.00, 'N/A', 'Cancelled'),
+(6, 6, 6, '2023-01-20', 250.00, 'Bank Transfer', 'Paid'),
+(7, 7, 7, '2023-01-21', 90.75, 'Cash', 'Pending'),
+(8, 8, 8, '2023-01-22', 450.00, 'Credit Card', 'Paid'),
+(9, 9, 9, '2023-01-23', 60.50, 'PayPal', 'Paid'),
+(10, 10, 10, '2023-01-24', 120.00, 'Credit Card', 'Pending');
